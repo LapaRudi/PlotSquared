@@ -351,14 +351,8 @@ public final class PlotQuery implements Iterable<Plot> {
             });
         } else if (this.sortingStrategy == SortingStrategy.SORT_BY_ORDER) {
             result.sort((a, b) -> {
-                int first = a.getFlag(OrderFlag.class);
-                int second = b.getFlag(OrderFlag.class);
-
-                if (first == 0) first = result.size();
-                if (second == 0) second = result.size();
-
-                System.out.println("first (" + a.getId() + "): " + first + "| second: (" + b.getId() + "): " + second + " | " +
-                        "returned: " + (first - second));
+                int first = a.getFlag(OrderFlag.class) == 0 ? result.size() : a.getFlag(OrderFlag.class);
+                int second = b.getFlag(OrderFlag.class) == 0 ? result.size() : b.getFlag(OrderFlag.class);
                 return first - second;
             });
         } else if (this.sortingStrategy == SortingStrategy.SORT_BY_RATING) {
