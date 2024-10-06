@@ -88,9 +88,9 @@ public class Visit extends Command {
         }
 
         if (relativeArea != null) {
-            query.relativeToArea(relativeArea).withSortingStrategy(SortingStrategy.SORT_BY_CREATION);
+            query.relativeToArea(relativeArea).withSortingStrategy(SortingStrategy.SORT_BY_ORDER);
         } else {
-            query.withSortingStrategy(SortingStrategy.SORT_BY_TEMP);
+            query.withSortingStrategy(SortingStrategy.SORT_BY_ORDER);
         }
 
         final List<Plot> plots = query.asList();
@@ -227,9 +227,9 @@ public class Visit extends Command {
                             final UUID uuid = uuids.toArray(new UUID[0])[0];
                             PlotQuery query = PlotQuery.newQuery();
                             if (Settings.Teleport.VISIT_MERGED_OWNERS) {
-                                query.whereBasePlot().ownersInclude(uuid);
+                                query.whereBasePlot().ownersInclude(uuid).withSortingStrategy(SortingStrategy.SORT_BY_ORDER);
                             } else {
-                                query.whereBasePlot().ownedBy(uuid);
+                                query.whereBasePlot().ownedBy(uuid).withSortingStrategy(SortingStrategy.SORT_BY_ORDER);
                             }
                             this.visit(
                                     player,
@@ -271,7 +271,7 @@ public class Visit extends Command {
                             if (finalPage == Integer.MIN_VALUE) {
                                 this.visit(
                                         player,
-                                        PlotQuery.newQuery().withAlias(finalArgs[0]),
+                                        PlotQuery.newQuery().withAlias(finalArgs[0]).withSortingStrategy(SortingStrategy.SORT_BY_ORDER),
                                         player.getApplicablePlotArea(),
                                         confirm,
                                         whenDone,
@@ -287,8 +287,8 @@ public class Visit extends Command {
                             this.visit(
                                     player,
                                     Settings.Teleport.VISIT_MERGED_OWNERS
-                                            ? PlotQuery.newQuery().ownersInclude(uuid).whereBasePlot()
-                                            : PlotQuery.newQuery().ownedBy(uuid).whereBasePlot(),
+                                            ? PlotQuery.newQuery().ownersInclude(uuid).whereBasePlot().withSortingStrategy(SortingStrategy.SORT_BY_ORDER)
+                                            : PlotQuery.newQuery().ownedBy(uuid).whereBasePlot().withSortingStrategy(SortingStrategy.SORT_BY_ORDER),
                                     null,
                                     confirm,
                                     whenDone,

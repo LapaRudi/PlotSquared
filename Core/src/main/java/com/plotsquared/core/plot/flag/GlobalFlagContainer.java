@@ -85,6 +85,7 @@ import com.plotsquared.core.plot.flag.implementations.MycelGrowFlag;
 import com.plotsquared.core.plot.flag.implementations.NoWorldeditFlag;
 import com.plotsquared.core.plot.flag.implementations.NotifyEnterFlag;
 import com.plotsquared.core.plot.flag.implementations.NotifyLeaveFlag;
+import com.plotsquared.core.plot.flag.implementations.OrderFlag;
 import com.plotsquared.core.plot.flag.implementations.PlaceFlag;
 import com.plotsquared.core.plot.flag.implementations.PlayerInteractFlag;
 import com.plotsquared.core.plot.flag.implementations.PlotTitleFlag;
@@ -228,6 +229,7 @@ public final class GlobalFlagContainer extends FlagContainer {
         this.addFlag(HostileCapFlag.HOSTILE_CAP_UNLIMITED);
         this.addFlag(MiscCapFlag.MISC_CAP_UNLIMITED);
         this.addFlag(MobCapFlag.MOB_CAP_UNLIMITED);
+        this.addFlag(OrderFlag.ORDER_NONE);
         this.addFlag(TimeFlag.TIME_DISABLED);
         this.addFlag(VehicleCapFlag.VEHICLE_CAP_UNLIMITED);
 

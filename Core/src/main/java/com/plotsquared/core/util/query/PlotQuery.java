@@ -25,6 +25,7 @@ import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.PlotArea;
 import com.plotsquared.core.plot.Rating;
 import com.plotsquared.core.plot.flag.implementations.DoneFlag;
+import com.plotsquared.core.plot.flag.implementations.OrderFlag;
 import com.plotsquared.core.plot.world.PlotAreaManager;
 import com.plotsquared.core.util.MathMan;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -347,6 +348,18 @@ public final class PlotQuery implements Iterable<Plot> {
                     return -1;
                 }
                 return 1;
+            });
+        } else if (this.sortingStrategy == SortingStrategy.SORT_BY_ORDER) {
+            result.sort((a, b) -> {
+                int first = a.getFlag(OrderFlag.class);
+                int second = b.getFlag(OrderFlag.class);
+
+                if (first == 0) first = result.size();
+                if (second == 0) second = result.size();
+
+                System.out.println("first (" + a.getId() + "): " + first + "| second: (" + b.getId() + "): " + second + " | " +
+                        "returned: " + (first - second));
+                return first - second;
             });
         } else if (this.sortingStrategy == SortingStrategy.SORT_BY_RATING) {
             result.sort((p1, p2) -> {

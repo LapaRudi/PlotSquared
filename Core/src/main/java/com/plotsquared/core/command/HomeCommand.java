@@ -66,7 +66,7 @@ public class HomeCommand extends Command {
             final RunnableVal3<Command, Runnable, Runnable> confirm,
             final RunnableVal2<Command, CommandResult> whenDone
     ) {
-        List<Plot> plots = query.asList();
+        List<Plot> plots = query.withSortingStrategy(SortingStrategy.SORT_BY_ORDER).asList();
         if (plots.isEmpty()) {
             player.sendMessage(TranslatableCaption.of("invalid.found_no_plots"));
             return;
@@ -177,7 +177,7 @@ public class HomeCommand extends Command {
                         );
                         return CompletableFuture.completedFuture(false);
                     }
-                    query.withSortingStrategy(SortingStrategy.SORT_BY_CREATION);
+                    query.withSortingStrategy(SortingStrategy.SORT_BY_ORDER);
                     break;
                 }
                 // identifier needs to be a plot id then

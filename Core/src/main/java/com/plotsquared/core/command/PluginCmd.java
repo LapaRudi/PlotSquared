@@ -21,7 +21,6 @@ package com.plotsquared.core.command;
 import com.plotsquared.core.PlotSquared;
 import com.plotsquared.core.configuration.caption.StaticCaption;
 import com.plotsquared.core.player.PlotPlayer;
-import com.plotsquared.core.util.PremiumVerification;
 import com.plotsquared.core.util.task.TaskManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
@@ -40,7 +39,8 @@ public class PluginCmd extends SubCommand {
             player.sendMessage(
                     StaticCaption.of("<gray>>> </gray><gold><bold>" + PlotSquared
                             .platform()
-                            .pluginName() + " <reset><gray>(<gold>Version</gold><gray>: </gray><gold><version></gold><gray>)</gray>"),
+                            .pluginName() + " <reset><gray>(<gold>Version</gold><gray>: " +
+                            "</gray><gold><version></gold><gray>)</gray>"),
                     TagResolver.resolver("version", Tag.inserting(Component.text(String.valueOf(PlotSquared.get().getVersion()))))
             );
             player.sendMessage(StaticCaption.of(
@@ -49,10 +49,6 @@ public class PluginCmd extends SubCommand {
                     "<gray>>> </gray><gold><bold>Wiki<reset><gray>: </gray><gold><click:open_url:https://intellectualsites.gitbook.io/plotsquared/>https://intellectualsites.gitbook.io/plotsquared/</gold>"));
             player.sendMessage(StaticCaption.of(
                     "<gray>>> </gray><gold><bold>Discord<reset><gray>: </gray><gold><click:open_url:https://discord.gg/intellectualsites>https://discord.gg/intellectualsites</gold>"));
-            player.sendMessage(
-                    StaticCaption.of("<gray>>> </gray><gold><bold>Premium<reset><gray>: <gold><value></gold>"),
-                    TagResolver.resolver("value", Tag.inserting(Component.text(PremiumVerification.isPremium())))
-            );
         });
         return true;
     }

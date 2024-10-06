@@ -16,38 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.plotsquared.core.util.query;
+package com.plotsquared.core.plot.flag.implementations;
 
-/**
- * Strategy used when sorting plot results
- */
-public enum SortingStrategy {
-    /**
-     * Plots won't be sorted at all
-     */
-    NO_SORTING,
-    /**
-     * Sort by the temporary (magic) plot ID
-     */
-    SORT_BY_TEMP,
-    /**
-     * Sort by the value in the plot's {@link com.plotsquared.core.plot.flag.implementations.DoneFlag}
-     */
-    SORT_BY_DONE,
-    /**
-     * Sort by custom order
-     */
-    SORT_BY_ORDER,
-    /**
-     * Sort by the plot rating
-     */
-    SORT_BY_RATING,
-    /**
-     * Sort by creation date
-     */
-    SORT_BY_CREATION,
-    /**
-     * Sort using a comparator
-     */
-    COMPARATOR
+import com.plotsquared.core.configuration.caption.TranslatableCaption;
+import com.plotsquared.core.plot.flag.types.NonNegativeIntegerFlag;
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+public class OrderFlag extends NonNegativeIntegerFlag<OrderFlag> {
+
+    public static final OrderFlag ORDER_NONE = new OrderFlag(0);
+
+    protected OrderFlag(final int value) {
+        super(value, TranslatableCaption.of("flags.flag_description_order"));
+    }
+
+    @Override
+    protected OrderFlag flagOf(@NonNull final Integer value) {
+        return new OrderFlag(value);
+    }
 }

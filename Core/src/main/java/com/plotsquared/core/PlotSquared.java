@@ -54,6 +54,7 @@ import com.plotsquared.core.plot.PlotManager;
 import com.plotsquared.core.plot.expiration.ExpireManager;
 import com.plotsquared.core.plot.expiration.ExpiryTask;
 import com.plotsquared.core.plot.flag.GlobalFlagContainer;
+import com.plotsquared.core.plot.flag.implementations.OrderFlag;
 import com.plotsquared.core.plot.world.PlotAreaManager;
 import com.plotsquared.core.plot.world.SinglePlotArea;
 import com.plotsquared.core.plot.world.SinglePlotAreaManager;
@@ -476,6 +477,42 @@ public class PlotSquared {
         }
         return Collections.unmodifiableSet(set);
 
+    }
+
+    public List<Plot> sortPlotsByOrder(Collection<Plot> plots) {
+        int max = 0;
+        int overflowCount = 0;
+
+        for (Plot plot : plots) {
+            if (plot.getFlag(OrderFlag.class) > 0) {
+                if (plot.getFlag(OrderFlag.class) > max) {
+                    max = plot.getFlag(OrderFlag.class);
+                }
+            } else {
+                overflowCount++;
+            }
+        }
+
+        Plot[] array = new Plot[max + 1];
+        List<Plot> overflow = new ArrayList<>(overflowCount);
+        for (Plot plot : plots) {
+            if (plot.getFlag(OrderFlag.class) <= 0) {
+                overflow.add(plot);
+            } else {
+                array[plot.getFlag(OrderFlag.class)] = plot;
+            }
+        }
+
+        ArrayList<Plot> result = new ArrayList<>(plots.size());
+        for (Plot plot : array) {
+            if (plot != null) {
+                result.add(plot);
+            }
+        }
+
+        overflow.sort(Comparator.comparingInt(Plot::hashCode));
+        result.addAll(overflow);
+        return result;
     }
 
     public List<Plot> sortPlotsByTemp(Collection<Plot> plots) {
